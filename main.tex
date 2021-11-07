@@ -1,0 +1,151 @@
+\documentclass[10pt,twoside,slovak,a4paper]{article}
+\usepackage[slovak]{babel}
+\usepackage[IL2]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{url} 
+\usepackage{hyperref} 
+
+\usepackage{cite}
+\usepackage{times}
+
+\usepackage{mathtools}
+
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.png}
+
+
+
+\pagestyle{headings}
+
+\title{Modelovanie bezpečnosti softvéru pre automatizovanú výrobu na neurónovej sieti\thanks{Semestrálny projekt v predmete Metódy inžinierskej práce, ak. rok 2021/22, vedenie: Vladimir Mlynarovič}} % meno a priezvisko vyučujúceho na cvičeniach
+
+\author{Anastasiia Alekperova\\[2pt]
+	{\small Slovenská technická univerzita v Bratislave}\\
+	{\small Fakulta informatiky a informačných technológií}\\
+	{\small \texttt{xalekperova@stuba.sk}}
+	}
+
+\date{\small 6. november 2021}
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Článok je venovaný problematike matematického modelovania a umelých neurónových sietí pre programovanie bezpečnosti komplexných softvérových systémov. Ukáže sa, že na modelovanie spoľahlivosti je možné použiť vertikálne vrstvené siete.
+\end{abstract}
+
+
+
+\section{Úvod}
+V medzinárodnej norme ISO 9126: 1991 \cite{alrawashdeh2013evaluating} je spoľahlivosť zvýraznená ako jedna z hlavných charakteristík kvality softvéru. Štandardný slovník \cite{branstad1984software} termíny softvérového inžinierstva definuje softvérovú bezpečnosť ako schopnosť systému alebo komponentu vykonávať požadované funkcie v špecifikovanom
+podmienok počas stanoveného časového obdobia.
+
+V súčasnej dobe výroba stále viac automatizuje monotónne úlohy s pomocou automatizovaných riadiacich systémov založených na priemyselnej alebo osobnej počítačovej technológii, programovateľných logických automatoch alebo špecializovaných počítačových systémoch \cite{kabak1984reability}.
+Celá táto počítačová technológia vyžaduje na svoju činnosť softvér. Nesprávna funkcia najmenej jednej z uvedených komponentov bude mať určite za následok zlyhanie celého systému, čo môže mať za následok nielen výrobné straty, ale aj poškodenie zdravia. Podľa štatistík je 50\% bezpečnostných problémov v softvérových produktoch dnes spôsobené nesprávnou a nebezpečnou štruktúrou softvéru \cite{polupudnikov2018istruments}.
+
+Niekedy je ľudským faktorom príčinou chyby výpočtov v analytických údajoch, takže je lepšie dôverovať prevádzke neurónovej siete.
+
+
+\section{Typy matematických modelov} \label{typy}
+Modely bezpečnosti softvéru sú rozdelené na analytické a empirické modely \cite{blagodatskych2005standart}. Analytické modely umožňujú vypočítať kvantitatívne ukazovatele spoľahlivosti na základe údajov o správaní programu počas testovacieho procesu. Empirické modely sú založené na analýze štrukturálnych vlastností programov.
+
+Analytické modely sú prezentované v dvoch skupinách: dynamické a statické. V dynamických modeloch sa správanie softvéru zohľadňuje v
+čas.
+Zaujímajú nás kvantitatívne bezpečnostné indikátory, preto uvažujme o analytických modeloch
+
+\subsection{Analytické dynamické modely}
+Napríklad, \textbf{model La Padula} vyzerá tak \cite{vasilenko2004models}:
+\begin{equation}\label{formula1}
+R(t)=R(\infty) - A/i , i=1,2...
+ \end{equation}
+
+kde $A$ - rastový parameter, $R(\infty )= \lim\limits_{x \to \infty} R(i)$ - maximálna spoľahlivosť softvéru.
+
+Neznáme množstvá možno nájsť z nasledujúcich rovníc:
+\begin{equation}\label{formula2}
+\sum \limits_{i=1}^{m} (S_i - m_i)/S_i - R(\infty ) + A_i/i = 0
+ \end{equation}
+
+kde $S_i$ - počet testov v i-tom štádiu, $m_i$ - počet porúch počas i-tej etapy ($i = 1,2,… m$).
+
+Podľa tohto modelu sa vykonávanie postupnosi testov vykonáva v $m$ etapách. Každá etapa končí zmenami softvéru.
+
+Model je dynamický, ale vo vzorci sa nepoužíva čas $t$. Dynamika sa prejavuje v opakovanom výpočte výsledku pri rôznych stavoch softvéru.
+
+V \textbf{modeli Djelinsky - Moranda} základným postojom, na ktorom je model založený, je, že v procese testovania softvéru sa hodnota testovacích časových intervalov medzi detekciou dve chyby majú exponenciálnu distribúciu s mierou zlyhania úmernou počtu ešte nezistených chýb. Každá zistená chyba je odstránená,
+počet zostávajúcich chýb sa zníži na jednu.
+
+Funkcia hustoty času:
+
+\begin{equation}\label{formula3}
+P(t_i)=\lambda_i *exp(-\lambda_i * t_i)
+ \end{equation}
+
+kde $\lambda_i$ - intenzita poruchy.
+
+Hodnota $\lambda_i$ sa vypočíta z výsledkov testov, použitím segmentov času od spustenia programu do poruhy.
+
+Toto je jeden z prvých a najjednoduchších modelov klasického typu, ktorý slúžil ako základ pre ďalší vývoj v tomto smere. Model bol použitý vo vývoji takýchto významných softvérových projektov ako program APOLLO (niektoré z jeho modulov).
+
+\subsection{Analytické statické modely} \label{ASM}
+
+\textit{ (Poznamka:clanok je vo vyvoji)}
+
+*Tu bude povedané o ďalších typoch modelov*
+\begin{enumerate}
+\item prvy
+\item druhy
+\end{enumerate}
+
+\section{Testovania pomocou neurónovej siete} \label{MM a NS}
+
+\subsection{Transformácia výrazov} \label{TV}
+
+V článku \cite{kabak1984reability} je prediktívny model bezpečnosti softvéru. Je založený na modeli Djelinsky - Moranda, ale vyzerá to trochu iné.
+
+\begin{equation}\label{}
+H(t_1,t_2,...,t_n) = \sum \limits_{i=1}^{N} v_i*\beta_i *exp(-\gamma_i * t_i)
+ \end{equation}
+ 
+ To znamená, že pre vysokú presnosť predikciu spoľahlivosti, riešenie veľkého počtu nelineárnych rovníc a každý obsahuje exponent.
+ 
+ Zjednodušujeme model a transformujeme ho na vzorec vhodnú pre modelovanie. Nahradíme premenny a získame množstvo exponentov \cite{kabak1984reability}.
+ 
+ \begin{equation}\label{formula4}
+H(t) = \sum \limits_{i=1}^{N} exp(-b_i * t + a_i)
+ \end{equation}
+ 
+ Získaný výsledok má teoretické riešenie, ale v praxi je ťažké použiť:
+ 
+ \begin{enumerate}
+\item Riešenie jednej rovnice určite vedie k inému rozhodnutiu a tak ďalej
+\item Je ťažké určiť hodnotu N, ktorá je potrebná pre presný výsledok.
+\end{enumerate}
+ 
+\subsection{Použitie umelej nervovej siete} \label{PUNS}
+
+Použitie neurónových sietí v bezpečnosti nie je nové. Existuje dostatočne veľký počet systémov založených na nervových sieťach a podporných funkciách, detekcii, odhaľovaní nesprávnej práce \cite{polupudnikov2018istruments}.
+
+Naša neurónová sieť sa musí naučiť predpovedať výsledok založený na časových údajoch.
+
+Jednoduchá schéma prevádzky neurónovej siete znázornená na obr.1.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.35]{ppp.png}
+    \caption{schéma prevádzky neurónovej siete}
+    \label{fig:my_label}
+\end{figure}
+
+\section{Zhodnotenie} \label{End}
+
+Tym  padom...
+
+
+\bibliography{literatura}
+\bibliographystyle{plain}
+\end{document}
